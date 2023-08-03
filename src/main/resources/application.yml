@@ -1,0 +1,29 @@
+server:
+  port: 8081
+
+publicKey:
+publicLocation: jwtPublic.rsa.pem
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:8061/eureka
+
+spring:
+  application:
+    name: gatewayservice
+  cloud:
+    gateway:
+      routes:
+        - id: musiclibraryservice
+          uri: http://127.0.0.1:8063/
+          predicates:
+            - Path=/lyric/**
+        - id: USERSERVICE
+          uri: http://127.0.0.1:8082/
+          predicates:
+            - Path=/user/**
+        - id: AUTHENTICATIONSERVICE
+          uri: http://127.0.0.1:8084/
+          predicates:
+            - Path=/auth/**
