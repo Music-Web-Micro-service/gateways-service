@@ -1,22 +1,9 @@
-FROM openjdk:17 as builder
-WORKDIR /app
-COPY . .
-
-#permission
-RUN chmod +x mvnw
-RUN ./mvnw clean package
-
-# Use an official OpenJDK image with JDK as a base image
 FROM openjdk:17
-
-# Set the working directory inside the container
 WORKDIR /app
 
-# Copy the Spring Boot application JAR file into the container
-COPY --from=builder target/gateways-service-0.0.1-SNAPSHOT.jar /app/
+COPY ./target/gateways-service-0.0.1-SNAPSHOT.jar ./target/gateways-service-0.0.1-SNAPSHOT.jar
 
-# Expose the port that your Eureka server listens on
 EXPOSE 8081
 
 # Command to run your Spring Boot application
-CMD ["java", "-jar", "gateways-service-0.0.1-SNAPSHOT.jar"]
+CMD ["java", "-jar", "./target/gateways-service-0.0.1-SNAPSHOT.jar"]
