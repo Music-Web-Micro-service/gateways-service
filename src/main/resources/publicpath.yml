@@ -1,0 +1,17 @@
+public-services:
+  auth:
+    public-paths:
+      - /auth/login
+      - /auth/register
+  music-library:
+    public-paths:
+      - /music/**
+      - /track/**
+  elasticsearch-service:
+    public-paths:
+      - /api/albums/search/**
+      - /api/artists/**
+  history-service:
+    public-paths:
+      - /play-history/public/**
+      - /track/free/**
