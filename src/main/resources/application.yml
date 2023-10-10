@@ -1,0 +1,41 @@
+server:
+  port: 8081
+
+publicKey:
+  publicLocation: jwtPublic.rsa.pem
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:8061/eureka
+logging.level.org.springframework.cloud.gateway: DEBUG
+logging.level.reactor.netty: DEBUG
+
+spring:
+  application:
+    name: gatewayservice
+  config:
+    location: classpath:publicpath.yml
+  cloud:
+    gateway:
+      routes:
+        - id: musiclibraryservice
+          uri: http://127.0.0.1:8063/
+          predicates:
+            - Path=/track/**,/lyric/**
+        - id: USERSERVICE
+          uri: http://127.0.0.1:8082/
+          predicates:
+            - Path=/user/**,/artists/**,/bands/**,/biographies/**,/roles/**
+        - id: AUTHENTICATIONSERVICE
+          uri: http://127.0.0.1:8084/
+          predicates:
+            - Path=/auth/**
+        - id: elastisearchservice
+          uri: http://127.0.0.1:8090/
+          predicates:
+            - Path=/api/albums**,/api/artists**
+        - id: mediaservice
+          uri: http://127.0.0.1:8088/
+          predicates:
+            - Path=/imageMedia/**,/musicResource/**
